@@ -3,7 +3,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
 # Set up ChromeDriver service
-service = Service("C:\Users\hafizah\selenium-github-example\drivers\chromedriver.exe")  # Path to your chromedriver
+service = Service("C:/Users/hafizah/selenium-github-example/drivers/chromedriver.exe")
+  # Path to your chromedriver
 
 # Initialize Chrome
 driver = webdriver.Chrome(service=service)
