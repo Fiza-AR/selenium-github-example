@@ -2,9 +2,9 @@ name: Selenium Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, add-new-test ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, add-new-test ]
 
 jobs:
   selenium-tests:
