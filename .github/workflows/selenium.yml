@@ -25,8 +25,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Install Google Chrome
-        run: |
-          choco install googlechrome --ignore-checksums
+        run: choco install googlechrome --ignore-checksums
 
       - name: Install ChromeDriver
         run: |
@@ -35,8 +34,7 @@ jobs:
 
       - name: Verify Chrome & ChromeDriver Version
         run: |
-          chromeVersion = (Get-ItemProperty "HKLM:\SOFTWARE\Google\Chrome\BLBeacon").version
-          Write-Output "Chrome Version: $chromeVersion"
+          & "C:\Program Files\Google\Chrome\Application\chrome.exe" --version
           chromedriver --version
 
       - name: Run Selenium Tests
