@@ -24,15 +24,20 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Download ChromeDriver
+      - name: Install Google Chrome
         run: |
-          $chromeVersion = (Get-ItemProperty "HKLM:\SOFTWARE\Google\Chrome\BLBeacon").version
-          $majorVersion = $chromeVersion.Split('.')[0]
-          Invoke-WebRequest -Uri "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$majorVersion" -OutFile latest_version.txt
-          $driverVersion = Get-Content latest_version.txt
-          Invoke-WebRequest -Uri "https://chromedriver.storage.googleapis.com/$driverVersion/chromedriver_win32.zip" -OutFile chromedriver.zip
-          Expand-Archive chromedriver.zip -DestinationPath .
-          Remove-Item chromedriver.zip
+          choco install googlechrome --ignore-checksums
+
+      - name: Install ChromeDriver
+        run: |
+          choco install chromedriver --ignore-checksums
+          $env:Path += ";C:\tools\chromedriver"
+
+      - name: Verify Chrome & ChromeDriver Version
+        run: |
+          chromeVersion = (Get-ItemProperty "HKLM:\SOFTWARE\Google\Chrome\BLBeacon").version
+          Write-Output "Chrome Version: $chromeVersion"
+          chromedriver --version
 
       - name: Run Selenium Tests
         run: python tests/test_login.py
