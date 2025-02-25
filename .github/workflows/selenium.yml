@@ -27,13 +27,14 @@ jobs:
 
       - name: Install Chrome and ChromeDriver
         run: |
-          sudo apt update
-          sudo apt install -y google-chrome-stable
-          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
-          wget -q -O chromedriver.zip "https://chromedriver.storage.googleapis.com/$CHROME_VERSION/chromedriver_linux64.zip"
-          unzip chromedriver.zip
-          sudo mv chromedriver /usr/local/bin/
-          rm chromedriver.zip
+            sudo apt update || true
+            sudo apt install -y google-chrome-stable || true
+            CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
+            wget -q -O chromedriver.zip "https://chromedriver.storage.googleapis.com/$CHROME_VERSION/chromedriver_linux64.zip"
+            unzip chromedriver.zip
+            sudo mv chromedriver /usr/local/bin/
+            rm chromedriver.zip
+        
 
       - name: Run Selenium tests
         run: python tests/test_login.py
