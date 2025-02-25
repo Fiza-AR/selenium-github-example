@@ -1,37 +1,30 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 
-# Correct ChromeDriver path
-service = Service(r"C:\Users\hafizah\selenium-github-example\drivers\chromedriver.exe")
+# Use ChromeDriverManager to auto-manage ChromeDriver
+service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service)
 
-try:
-    # Navigate to website
-    driver.get("https://the-internet.herokuapp.com/login")
+# Navigate to website
+driver.get("https://the-internet.herokuapp.com/login")
 
-    # Wait for elements to load
-    wait = WebDriverWait(driver, 10)
+# Example interaction
+username = driver.find_element(By.ID, "username")
+password = driver.find_element(By.ID, "password")
+login_button = driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
 
-    # Example interaction
-    username = wait.until(EC.presence_of_element_located((By.ID, "username")))
-    password = driver.find_element(By.ID, "password")
-    login_button = driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
+username.send_keys("tomsmith")
+password.send_keys("SuperSecretPassword!")
+login_button.click()
 
-    # Input credentials
-    username.send_keys("tomsmith")
-    password.send_keys("SuperSecretPassword!")
-    login_button.click()
+# Check for successful login
+success_message = driver.find_element(By.ID, "flash").text
+if "You logged into a secure area!" in success_message:
+    print("Login Successful: You logged into a secure area!")
+else:
+    print("Login Failed")
 
-    # Validate login success
-    success_message = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".flash.success")))
-    print("Login Successful:", success_message.text)
-
-except Exception as e:
-    print("Test failed:", e)
-
-finally:
-    # Close browser
-    driver.quit()
+# Close browser
+driver.quit()
