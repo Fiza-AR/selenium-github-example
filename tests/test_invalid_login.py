@@ -38,13 +38,13 @@ for creds in invalid_credentials:
     # Check for empty password separately
     if creds["password"] == "":
         if "Your password is invalid!" in error_message or "Your username is invalid!" in error_message:
-            print(f"❌ Login failed as expected with empty password: {creds}")
+            print(f"[FAILED] Login failed as expected with empty password: {creds}")
         else:
-            print(f"⚠️ Unexpected behavior with empty password: {creds}")
+            print(f"[WARNING] Unexpected behavior with empty password: {creds}")
     elif "Your username is invalid!" in error_message:
-        print(f"❌ Login failed as expected with: {creds}")
+        print(f"[FAILED] Login failed as expected with: {creds}")
     else:
-        print(f"⚠️ Unexpected behavior with: {creds}")
+        print(f"[WARNING] Unexpected behavior with: {creds}")
 
 # Close browser
 driver.quit()
