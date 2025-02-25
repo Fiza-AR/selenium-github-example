@@ -25,4 +25,6 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Selenium Tests
-        run: python tests/test_login.py
+        run: |
+          python tests/test_login.py
+          python tests/test_invalid_login.py  # 🆕 Run the new test
